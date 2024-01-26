@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exemple{% endblock %}
+
+{% block body %}
+    {{ form_start(formulaire) }}
+    {{ form_end(formulaire) }}
+    {% for message in app.flashes('success') %}
+    {{ message }}
+    {% for message in app.flashes('danger') %}
+    {{ message }}
+    {% for message in app.flashes('warning') %}
+    {{ message }}
+{% endfor %}
+{% endblock %} 

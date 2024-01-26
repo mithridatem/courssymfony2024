@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Category{% endblock %}
+
+{% block body %}
+    {{ form_start(formulaire, {'attr': {'class': 'max-w-sm mx-auto'} }) }}
+    <div class="mb-5">
+    {{ form_label(formulaire.name) }}
+    {{ form_widget(formulaire.name) }}
+    </div>
+    {{ form_end(formulaire) }}
+    {% include "_toast.html.twig" %}
+{% endblock %} 
