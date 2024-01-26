@@ -69,3 +69,4 @@ class RegisterType extends AbstractType
         ]);
     }
 }
+
