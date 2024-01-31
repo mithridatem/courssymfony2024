@@ -30,7 +30,7 @@ class RegisterController extends AbstractController
                 $user->setPassword($hash);
                 //version en une seule étape
                 //$user->setPassword($hasher->hashPassword($user,$user->getPassword()));
-                $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+                $user->setRoles(['ROLE_USER']);
                 $em->persist($user);
                 $em->flush();
             }
