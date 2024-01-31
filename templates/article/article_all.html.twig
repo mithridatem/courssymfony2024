@@ -14,13 +14,19 @@
               <span class="font-medium text-lg text-gray-800 title-font leading-none">{{ article.creationdate|date('d')}}</span>
             </div>
             <div class="flex-grow pl-6">
-              <h2 class="tracking-widest text-xs title-font font-medium text-red-500 mb-1">{{ article.categories[0].name|upper }} {{ article.categories[1].name|upper }} {{ article.categories[2].name|upper }}</h2>
+              <h2 class="tracking-widest text-xs title-font font-medium text-red-500 mb-1">
+                {% for category in article.categories %}
+                  {{ category.name|upper }}
+                {% endfor %}
+              </h2>
               <h1 class="title-font text-xl font-medium text-gray-900 mb-3">{{ article.title|capitalize }}</h1>
               <p class="leading-relaxed mb-5">{{ article.content }}</p>
               <a class="inline-flex items-center">
                 <img alt="blog" src="https://dummyimage.com/103x103" class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center">
                 <span class="flex-grow flex flex-col pl-3">
-                  <span class="title-font font-medium text-gray-900">{{ article.user.firstname|capitalize}} {{ article.user.lastname|capitalize }}</span>
+                  {% if article.user.firstname is defined and article.user.lastname is defined %}
+                    <span class="title-font font-medium text-gray-900">{{ article.user.firstname|capitalize}} {{ article.user.lastname|capitalize }}</span>
+                  {% endif %}
                   <span class="title-font font-medium text-gray-900"><a href="/article/id/{{ article.id }}">Détail</a></span>
                 </span>
               </a>
