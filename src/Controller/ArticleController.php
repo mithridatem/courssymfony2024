@@ -39,6 +39,7 @@ class ArticleController extends AbstractController
         ]);
     }
     #[Route('/article/add', name: 'app_article_add')]
+
     public function addArticle(Request $request,
     UserInterface $userInterface, UserRepository $userRepository): Response {
         //instanciation de l'entité Article
