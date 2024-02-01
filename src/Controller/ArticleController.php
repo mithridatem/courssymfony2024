@@ -16,10 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ArticleController extends AbstractController
 {
     private ArticleRepository $articleRepository;
-
-    public function __construct(ArticleRepository $articleRepository) 
+    private EntityManagerInterface $em;
+    public function __construct(ArticleRepository $articleRepository,EntityManagerInterface $em) 
     {
         $this->articleRepository = $articleRepository;
+        $this->em = $em;
     }
     
     #[Route('/article/all', name: 'app_article_all')]
@@ -38,8 +39,8 @@ class ArticleController extends AbstractController
         ]);
     }
     #[Route('/article/add', name: 'app_article_add')]
-    public function addArticle(Request $request,EntityManagerInterface $em,
-    ArticleRepository $repo,UserInterface $userInterface, UserRepository $userRepository): Response {
+    public function addArticle(Request $request,
+    UserInterface $userInterface, UserRepository $userRepository): Response {
         //instanciation de l'entité Article
         $article = new Article();
         //création du formulaire
@@ -52,22 +53,26 @@ class ArticleController extends AbstractController
             if($form->getData()->getTitle()AND $form->getData()->getContent()
             AND $form->getData()->getCreationDate()){
                 //test si l'article n'existe pas déja
-                if(!$repo->findOneBy(["title"=>$form->getData()->getTitle(), 
+                if(!$this->articleRepository->findOneBy(["title"=>$form->getData()->getTitle(), 
                 "content"=>$form->getData()->getContent()])){
                     $article->setUser($userRepository->findOneBy(["email"=>$userInterface->getUserIdentifier()]));
-                    $em->persist($article);
-                    $em->flush();
-                    dd($article);
+                    $this->em->persist($article);
+                    $this->em->flush();
+                    $type = "success";
+                    $message = "Article ajouté avec succès";
                 }
                 //test si il existe déja
                 else{
-                    dd("l'article existe déja");
+                    $type = "danger";
+                    $message = "Cet article existe déja";
                 }
             }
             //test si les champs sont vides
             else{
-                dd("Veuillez remplir tous les champs");
+                $type = "warning";
+                $message = "Veuillez remplir tous les champs";
             }
+            $this->addFlash($type,$message);
         }
         //return de la vue twig
         return $this->render('article/article_add.html.twig',[
