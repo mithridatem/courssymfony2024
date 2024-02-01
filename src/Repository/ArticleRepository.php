@@ -21,20 +21,22 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Article[] Returns an array of Article objects
+     */
+   public function findByDoublon($title,$content,$id): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.title = :title')
+            ->andWhere('a.content = :content')
+            ->andWhere('a.id != :id')
+            ->setParameter('title', $title)
+            ->setParameter('content', $content)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Article
 //    {

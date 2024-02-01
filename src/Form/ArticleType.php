@@ -19,8 +19,12 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title',TextType::class)
-            ->add('content',TextareaType::class)
+            ->add('title',TextType::class,[
+                'empty_data'=>'vide'
+            ])
+            ->add('content',TextareaType::class,[
+                'empty_data'=>'vide'
+            ])
             ->add('creationDate',DateTimeType::class,[
                 'html5' => true,
                 'widget' => 'single_text',
@@ -31,7 +35,7 @@ class ArticleType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
             ])
-            ->add('Ajouter',SubmitType::class);
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
