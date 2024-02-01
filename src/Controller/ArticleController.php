@@ -80,4 +80,9 @@ class ArticleController extends AbstractController
             'form'=> $form->createView(),
         ]);
     }
+    #[Route('/article/update/{id}', name: 'app_article_update')]
+    public function updateArticle($id): Response {
+        return $this->render('article/article_update.html.twig',[
+        ]);
+    }
 }
