@@ -27,6 +27,7 @@ class ArticleController extends AbstractController
     public function showAllArticles(): Response
     {
         $articles = $this->articleRepository->findAll();
+        //dd($articles[0]->getUser()->getEmail());
         return $this->render('article/article_all.html.twig', [
             'articles' => $articles,
         ]);
