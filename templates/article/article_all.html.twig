@@ -28,11 +28,10 @@
                     <span class="title-font font-medium text-gray-900">{{ article.user.firstname|capitalize}} {{ article.user.lastname|capitalize }}</span>
                   {% endif %}
                   <span class="title-font font-medium text-gray-900"><a href="/article/id/{{ article.id }}">Détail</a></span>
-                 
-                  {% if article.user.email is defined and article.user.email == app.user.userIdentifier %}
+                  {% if article.user.email is defined and app.user.userIdentifier is defined 
+                    and article.user.email == app.user.userIdentifier %}
                   <span class="title-font font-medium text-gray-900"><a href="/article/update/{{ article.id }}">Update</a></span>
                   {% endif %}
-
                 </span>
               </a>
             </div>
