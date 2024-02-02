@@ -22,7 +22,11 @@
               <h1 class="title-font text-xl font-medium text-gray-900 mb-3">{{ article.title|capitalize }}</h1>
               <p class="leading-relaxed mb-5">{{ article.content }}</p>
               <a class="inline-flex items-center">
-                <img alt="blog" src="https://dummyimage.com/103x103" class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center">
+                {% if article.user.img is defined and article.user.img != null %}
+                  <img alt="blog" src="/images/{{ article.user.img }}" class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center">   
+                {% else %}
+                  <img alt="blog" src="https://dummyimage.com/103x103" class="w-8 h-8 rounded-full flex-shrink-0 object-cover object-center">
+                {% endif %}
                 <span class="flex-grow flex flex-col pl-3">
                   {% if article.user.firstname is defined and article.user.lastname is defined %}
                     <span class="title-font font-medium text-gray-900">{{ article.user.firstname|capitalize}} {{ article.user.lastname|capitalize }}</span>
