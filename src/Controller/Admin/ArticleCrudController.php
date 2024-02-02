@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -17,15 +19,7 @@ class ArticleCrudController extends AbstractCrudController
     {
         return Article::class;
     }
-/*     public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-        ->setPageTitle('index',  'Liste des articles')
-        ->setEntityLabelInSingular('Article')
-        ->setEntityLabelInPlural('Articles')
-        ;
-    }
-    */
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -37,5 +31,37 @@ class ArticleCrudController extends AbstractCrudController
             yield AssociationField::new('categories','Catégories'),
         ];
     }
-    
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPageTitle('index', 'Liste des Articles')
+            ->setPageTitle('edit', 'Modifier l\'article')
+            ->setPageTitle('new', 'Ajouter un article')
+        ;
+    }
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            //Nom des boutons page liste
+            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+                return $action->setIcon('fa-solid fa-plus')->setLabel('Ajouter');
+            })
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setLabel('Modifier');
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setLabel('Supprimer');
+            })
+            //nom des boutons page modifier
+            ->update(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN, function (Action $action) {
+                return $action->setLabel('Sauvegarder');
+            })
+            ->remove(Crud::PAGE_EDIT,Action::SAVE_AND_CONTINUE)
+            //nom des boutons page ajout
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                return $action->setLabel('Modifier');
+            })
+            ->remove(Crud::PAGE_NEW,Action::SAVE_AND_ADD_ANOTHER)
+        ;
+    }
 }
