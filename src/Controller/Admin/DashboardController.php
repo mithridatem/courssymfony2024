@@ -16,27 +16,27 @@ use App\Entity\User;
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(private AdminUrlGenerator $adminUrlGenerator){}
-    #[Route('/admin', name: 'admin')]
+    #[Route('/enigma', name: 'app_panel_admin')]
     public function index(): Response
     {
         $url = $this->adminUrlGenerator
         ->setController(ArticleCrudController::class)
         ->generateUrl();
         return $this->redirect($url);
-
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Data');
+            ->setTitle('Pannel Administrateur');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        //yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToRoute('Retour à l\'accueil', 'fa fa-home', 'app_article_all');
+        yield MenuItem::linkToCrud('Articles', 'fa-regular fa-newspaper', Article::class);
+        yield MenuItem::linkToCrud('User', 'fa-solid fa-users', User::class);
         yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class);
-        yield MenuItem::linkToCrud('Articles', 'fas fa-list', Article::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
     }
 }
