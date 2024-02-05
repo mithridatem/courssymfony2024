@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affichage Météo{% endblock %}
+
+{% block body %}
+    <h2>{{ weather.name }}</h2>
+    <p>{{ (weather.main.temp -273.15) |round }} °</p>
+    <img src="https://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="icone de la météo">
+{% endblock %}
