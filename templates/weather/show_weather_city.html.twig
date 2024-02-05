@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affichage Météo{% endblock %}
+
+{% block body %}
+    {# Affichage du formulaire #}
+    {{ form_start(form) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    {# Affichage de la météo #}
+    {% if weather.cod is defined %}
+        <p>{{ weather.name }}</p>
+        <p>{{ (weather.main.temp -273.15) | round(1, 'floor')  }}°C</p>
+    {% endif %}
+    
+    {# Affichage des erreurs #}
+    {%  if weather.error is defined %}
+        <p>{{ weather.error }}</p>
+    {% endif %}
+{% endblock %}
