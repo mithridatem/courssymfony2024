@@ -15,6 +15,11 @@ use App\Service\UtilsService;
 use App\Service\CategoryService;
 class CategoryController extends AbstractController
 {
+    private CategoryService $categoryService;
+    public function __construct(CategoryService $categoryService){
+        $this->categoryService = $categoryService;
+    }
+
     #[Route('/category/add', name: 'app_category_add')]
     public function addCategory(Request $request,EntityManagerInterface $em, CategoryRepository $repo): Response
     {
@@ -43,6 +48,7 @@ class CategoryController extends AbstractController
           'formulaire' => $form->createView(),
         ]);
     }
+
     #[Route('/category/exemple', name:'app_category_exemple')]
     public function exemple(Request $request,EntityManagerInterface $em,
     CategoryRepository $repo): Response {
@@ -66,11 +72,20 @@ class CategoryController extends AbstractController
             'formulaire' => $form->createView(),
         ]);
     }
+
     #[Route('category/all', name:'app_category_all')]
-    public function showCategories(CategoryService $categoryService): Response {
-        $categories = $categoryService->getAllCategory();
+    public function showCategories(): Response {
+        $categories = $this->categoryService->getAllCategory();
         return $this->render('category/show_all_categories.html.twig',[
             'categories' => $categories,
+        ]);
+    }
+
+    #[Route('/category/id/{id}', name:'app_category_id')]
+    public function showCategoryById($id) : Response {
+        $category = $this->categoryService->getCategoryId($id);
+        return $this->render('category/show_category_id.html.twig',[
+           'category' => $category,
         ]);
     }
 }

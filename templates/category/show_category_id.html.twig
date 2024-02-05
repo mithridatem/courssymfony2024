@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie par son ID{% endblock %}
+
+{% block body %}
+    {% if category is not null %}
+        <p>{{ category.id }}</p>
+        <p>{{ category.name }}</p>
+    {% else %}
+        <p>La catégorie n'existe pas</p>
+    {% endif %}
+{% endblock %} 

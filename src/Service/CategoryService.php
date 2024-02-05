@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -18,5 +19,8 @@ class CategoryService{
            $data = null;
         }
         return $data;
+    }
+    public function getCategoryId($id) : Category|null {
+        return $this->categoryRepository->find($id);
     }
 }
