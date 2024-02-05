@@ -19,12 +19,9 @@ class WeatherType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Entrez une ville',
                     'empty_data' => 'Toulouse',
-                    'data'  => '',
                 ]
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Rechercher'
-            ])
+            ->add('submit', SubmitType::class)
         ;
     }
 

@@ -14,7 +14,7 @@
         <p>{{ weather.name }}</p>
         <p>{{ (weather.main.temp -273.15) | round(1, 'floor')  }}°C</p>
     {% endif %}
-    
+
     {# Affichage des erreurs #}
     {%  if weather.error is defined %}
         <p>{{ weather.error }}</p>
