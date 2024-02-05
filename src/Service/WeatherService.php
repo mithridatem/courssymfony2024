@@ -32,6 +32,7 @@ class WeatherService
         //retour du tableau
         return $data;
     }
+    //méthode qui retourne un tableau résultant de la requête API pour une ville donnée
     public function getWeatherCity(string $city): array
     {
         //récupération du tableau de données depuis WeatherService
