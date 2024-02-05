@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
         $categories = [];
         //instance de la classe Faker
         $faker = Faker\Factory::create('fr_FR');
-        //boucle de création de 10 utilisateurs
+        //boucle de création de 50 utilisateurs
         for ($i=0; $i < 50; $i++) { 
             //stocker le mot de passe dans une variable
             $password = $faker->jobTitle();
