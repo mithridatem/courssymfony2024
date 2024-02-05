@@ -13,6 +13,7 @@ use App\Form\ExempleType;
 use App\Repository\CategoryRepository;
 use App\Service\UtilsService;
 use App\Service\CategoryService;
+use App\Service\WeatherService;
 class CategoryController extends AbstractController
 {
     private CategoryService $categoryService;
@@ -87,5 +88,9 @@ class CategoryController extends AbstractController
         return $this->render('category/show_category_id.html.twig',[
            'category' => $category,
         ]);
+    }
+    #[Route('/category/test', name:'app_category_test')]
+    public function test(WeatherService $weatherService): Response {
+        dd($weatherService->getWeather());
     }
 }
