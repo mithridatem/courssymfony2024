@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\CategoryType;
 use App\Form\ExempleType;
 use App\Repository\CategoryRepository;
+use App\Service\UtilsService;
+use App\Service\CategoryService;
 class CategoryController extends AbstractController
 {
     #[Route('/category/add', name: 'app_category_add')]
@@ -29,6 +31,7 @@ class CategoryController extends AbstractController
                 $notice = "danger";
             }
             else {
+                $category->setName(UtilsService::cleanInput($category->getName()));
                 $em->persist($category);
                 $em->flush();
                 $msg = "La catégorie a été ajouté en BDD";
@@ -61,6 +64,13 @@ class CategoryController extends AbstractController
         }
         return $this->render('category/exemple.html.twig',[
             'formulaire' => $form->createView(),
+        ]);
+    }
+    #[Route('category/all', name:'app_category_all')]
+    public function showCategories(CategoryService $categoryService): Response {
+        $categories = $categoryService->getAllCategory();
+        return $this->render('category/show_all_categories.html.twig',[
+            'categories' => $categories,
         ]);
     }
 }

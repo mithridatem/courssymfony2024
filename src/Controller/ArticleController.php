@@ -40,8 +40,8 @@ class ArticleController extends AbstractController
             'article' => $article,
         ]);
     }
-    #[Route('/article/add', name: 'app_article_add')]
 
+    #[Route('/article/add', name: 'app_article_add')]
     public function addArticle(
         Request $request,
         UserInterface $userInterface,

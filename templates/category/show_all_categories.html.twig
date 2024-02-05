@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+    {% if categories is not null %}
+        {% for category in categories %}
+            <p>{{ category.name }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Il n'y a pas de catégorie dans la base de données</p>
+    {% endif %}
+{% endblock %} 
