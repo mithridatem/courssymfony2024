@@ -6,16 +6,44 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/user/{id}', 
+            requirements: ['id' => '\d+'],
+            normalizationContext: ['groups' => 'user:item']),
+        new GetCollection(
+            uriTemplate: '/user',
+            normalizationContext: ['groups' => 'user:list']),
+        new Post(
+            uriTemplate:'/utilisateur'
+        ),
+        new Delete(
+            uriTemplate:'/utilisateur/{id}'
+        ),
+    ],
+    order: ['id' => 'ASC', 'firstname' => 'ASC'],
+    paginationEnabled: true
+)]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:item','user:list','article:item','article:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['user:item','user:list'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -25,12 +53,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['user:item','user:list'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['user:item','user:list','article:item','article:list'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['user:item','user:list','article:item','article:list'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]

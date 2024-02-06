@@ -7,28 +7,51 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/article/{id}', 
+            requirements: ['id' => '\d+'],
+            normalizationContext: ['groups' => 'article:item']),
+        new GetCollection(
+            uriTemplate: '/article',
+            normalizationContext: ['groups' => 'article:list']),
+    ],
+    order: ['id' => 'ASC', 'title' => 'ASC'],
+    paginationEnabled: false
+)]
 class Article
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['article:item','article:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['article:item','article:list'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['article:item','article:list'])]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['article:item','article:list'])]
     private ?\DateTimeInterface $creationDate = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['article:item','article:list'])]
     private ?User $user = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[Groups(['article:item','article:list'])]
     private Collection $categories;
 
     public function __construct()
