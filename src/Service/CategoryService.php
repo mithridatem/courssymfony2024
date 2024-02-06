@@ -23,4 +23,15 @@ class CategoryService{
     public function getCategoryId($id) : Category|null {
         return $this->categoryRepository->find($id);
     }
+    public function getCategoryByName(string $name) : Category|null {
+        return $this->categoryRepository->findOneBy(["name"=>$name]);
+    }
+    public function insertCategory(?Category $category) : bool {
+        if(!$category){
+            return false;
+        }
+        $this->em->persist($category);
+        $this->em->flush();
+        return true;
+    }
 }

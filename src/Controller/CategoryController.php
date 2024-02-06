@@ -13,7 +13,7 @@ use App\Form\ExempleType;
 use App\Repository\CategoryRepository;
 use App\Service\UtilsService;
 use App\Service\CategoryService;
-use App\Service\WeatherService;
+
 class CategoryController extends AbstractController
 {
     private CategoryService $categoryService;
@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/category/add', name: 'app_category_add')]
-    public function addCategory(Request $request,EntityManagerInterface $em, CategoryRepository $repo): Response
+    public function addCategory(Request $request): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -32,14 +32,13 @@ class CategoryController extends AbstractController
                 $msg = "Veuillez remplir tous les champs du formulaire";
                 $notice = "warning";
             }
-            else if($repo->findOneBy(["name"=>$form->getData()->getName()])){
+            else if($this->categoryService->getCategoryByName($form->getData()->getName())){
                 $msg = "La catégorie existe déja en BDD";
                 $notice = "danger";
             }
             else {
                 $category->setName(UtilsService::cleanInput($category->getName()));
-                $em->persist($category);
-                $em->flush();
+                $this->categoryService->insertCategory($category);
                 $msg = "La catégorie a été ajouté en BDD";
                 $notice = "success";
             }
@@ -88,9 +87,5 @@ class CategoryController extends AbstractController
         return $this->render('category/show_category_id.html.twig',[
            'category' => $category,
         ]);
-    }
-    #[Route('/category/test', name:'app_category_test')]
-    public function test(WeatherService $weatherService): Response {
-        dd($weatherService->getWeather());
     }
 }
