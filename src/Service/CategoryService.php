@@ -20,8 +20,16 @@ class CategoryService{
         }
         return $data;
     }
-    public function getCategoryId($id) : Category|null {
-        return $this->categoryRepository->find($id);
+    public function getCategoryId($id) : Category|array|null {
+        try {
+            $data = $this->categoryRepository->find($id);
+            if(!$data){
+                throw new \Exception('Categorie n\'existe pas');
+            }
+        } catch (\Exception $e) {
+            $data = ['error'=>$e->getMessage()];
+        }
+        return $data;
     }
     public function getCategoryByName(string $name) : Category|null {
         return $this->categoryRepository->findOneBy(["name"=>$name]);
