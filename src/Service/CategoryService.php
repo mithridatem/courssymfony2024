@@ -27,7 +27,7 @@ class CategoryService{
         return $this->categoryRepository->findOneBy(["name"=>$name]);
     }
     public function insertCategory(?Category $category) : bool {
-        if(!$category){
+        if(!$category) {
             return false;
         }
         $this->em->persist($category);

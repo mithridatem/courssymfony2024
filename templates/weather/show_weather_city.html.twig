@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affichage Météo{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+    {# Test si weather.cod est défini #}
+    {% if weather.cod is defined %}
+        {# test si le code est égal à 200 #}
+        {% if weather.cod == 200 %}
+           <p>{{ weather.name }}</p> 
+           <p>{{ (weather.main.temp -273.15) | round(1,'floor')}}°C</p>
+        {# test autre valeur de code #}
+        {% else %}
+            <p>{{ weather.message }}</p>   
+        {% endif %}
+    {% endif %}
+{% endblock %}
