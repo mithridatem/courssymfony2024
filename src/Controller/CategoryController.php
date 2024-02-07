@@ -14,9 +14,11 @@ use App\Repository\CategoryRepository;
 use App\Service\UtilsService;
 use App\Service\CategoryService;
 
+
 class CategoryController extends AbstractController
 {
     private CategoryService $categoryService;
+ 
     public function __construct(CategoryService $categoryService){
         $this->categoryService = $categoryService;
     }
@@ -88,4 +90,5 @@ class CategoryController extends AbstractController
            'category' => $category,
         ]);
     }
+    
 }
