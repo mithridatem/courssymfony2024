@@ -7,26 +7,27 @@
     <div class="mb-5">
         {{ form_label(form.firstname) }}
         {{ form_widget(form.firstname) }}
-    </div>
-    <div class="mb-5">
+    
+    
         {{ form_label(form.lastname) }}
         {{ form_widget(form.lastname) }}
-    </div>
-    <div class="mb-5">
+ 
         {{ form_label(form.email) }}
         {{ form_widget(form.email) }}
-    </div>
-    <div class="mb-5">
+
         {{ form_label(form.password.first) }}
         {{ form_widget(form.password.first) }}
-    </div>
-    <div class="mb-5">
+
         {{ form_label(form.password.second) }}
         {{ form_widget(form.password.second) }}
+        
     </div>
     
     {{ form_rest(form) }}
+    {{ form_errors(form.password.first) }}
     {{ form_end(form) }}
-    
+   {#  {{ form_start(form) }}
+    {{ form_errors(form)}}
+    {{ form_end(form)}} #}
     {% include "_toast.html.twig" %}
 {% endblock %}
