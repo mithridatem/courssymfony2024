@@ -8,12 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\RegisterType;
 use App\Entity\User;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Service\EmailService;
 use App\Service\RegisterService;
-
+use App\Service\UtilsService;
+use Symfony\Component\String\UnicodeString;
 class RegisterController extends AbstractController
 {
     private EmailService $emailService;
@@ -26,7 +25,12 @@ class RegisterController extends AbstractController
     #[Route('/register/add', name: 'app_register_add')]
     public function addUser(): Response
     {
-        return new Response("test");
+        if(UtilsService::testRegex("AZERTYazerty1",$this->getParameter('regex_password'))){
+            $reponse = "good";
+        }else{
+            $reponse = "pas bon";
+        }
+        return new Response($reponse);
     }
     #[Route('/register/sendemail', name:'app_register_send_email')]
     public function testEmail(): Response {
@@ -40,5 +44,3 @@ class RegisterController extends AbstractController
             $body));
     }
 }
-//$objet = iconv("UTF-8", "UTF-8", $maChaine), PHP_EOL;
-//$objet = mb_convert_encoding($str, "UTF-8", "UTF-8");
