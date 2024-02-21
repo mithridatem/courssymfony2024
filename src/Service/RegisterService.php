@@ -52,4 +52,14 @@ class RegisterService
         $this->em->flush();
         return true;
     }
+
+    public function updateUser(?User $user) : bool 
+    {
+        if(!$user){
+            return false;
+        }
+        $this->em->persist($user);
+        $this->em->flush();
+        return true;
+    }
 }

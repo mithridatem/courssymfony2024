@@ -26,6 +26,7 @@
     </div>
     
     {{ form_rest(form) }}
+    {{ form_errors(form.password.first, {'attr':{'class': 'test'} }) }}
     {{ form_end(form) }}
     
     {% include "_toast.html.twig" %}
