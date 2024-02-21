@@ -164,6 +164,7 @@ class RegisterController extends AbstractController
                 //rediriger vers la connexion
                 return $this->redirectToRoute('app_login');
             }
+            return $this->redirectToRoute('app_register_add');
         }
         //si le compte n'existe pas ou id n'est pas un entier
         return $this->redirectToRoute('app_register_add');
