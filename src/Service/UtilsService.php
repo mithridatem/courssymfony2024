@@ -31,9 +31,8 @@ class UtilsService
         //si le password possède 12 caractères minumum, lettre minuscule, majuscule et nombre
         if ($string->match($regex)) {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     /**

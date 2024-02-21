@@ -123,4 +123,36 @@ class RegisterController extends AbstractController
             $body
         ));
     }
+
+    #[Route('/register/activate/{id}', name:'app_register_activate')]
+    public function activateUser(mixed $id) : Response {
+        //test si id est un entier
+        if(is_numeric($id)) {
+            $user = $this->registerService->getUserById($id);
+            //test si le compte existe
+            if($user) {
+                $user->setIsActivated(true);
+                $this->registerService->updateUser($user);
+                //rediriger vers la connexion
+                return $this->redirectToRoute('app_login');
+            }
+            //le compte n'existe pas
+            else {
+               return  $this->redirectToRoute('app_register_add');
+            }
+        }
+        //le paramètre n'est pas un entier
+        else {
+           return $this->redirectToRoute('app_register_add');
+        }
+    }
+
+    #[Route('/register/test_regex/{chaine}', name:'app_register_test_regex')]
+    public function testPassword($chaine) : Response {
+        //test si la chaine correspond
+        if(UtilsService::testRegex($chaine,$this->getParameter('regex_password'))){
+            return new Response('le password est valide');
+        }
+        return new Response('Le password ne correspond pas');
+    }
 }

@@ -11,41 +11,42 @@ class EmailService{
     private string $smtp_account;
     private string $smtp_password;
     private int $smtp_port;
+    private PHPMailer $mail;
     public function __construct(string $smtp_server, string $smtp_account, string $smtp_password, int $smtp_port)
     {
         $this->smtp_server = $smtp_server;
         $this->smtp_account = $smtp_account;
         $this->smtp_password = $smtp_password;
         $this->smtp_port = $smtp_port;
+        $this->mail = new PHPMailer(true);
     }
     public function sendEmail(string $recevier, string $subject, string $content):string 
     {
-        $mail = new PHPMailer(true);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-            $mail->isSMTP();
-            $mail->Host       = $this->smtp_server;
-            $mail->SMTPAuth   = true;
-            $mail->Username   = $this->smtp_account;
-            $mail->Password   = $this->smtp_password;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = $this->smtp_port;
+            $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $this->mail->isSMTP();
+            $this->mail->Host       = $this->smtp_server;
+            $this->mail->SMTPAuth   = true;
+            $this->mail->Username   = $this->smtp_account;
+            $this->mail->Password   = $this->smtp_password;
+            $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $this->mail->Port       = $this->smtp_port;
             //To load the French version
-            $mail->setLanguage('fr', '/optional/path/to/language/directory/');
+            $this->mail->setLanguage('fr', '/optional/path/to/language/directory/');
             //Recipients
-            $mail->setFrom($this->smtp_account, 'Admin Blog');
-            $mail->addAddress($recevier);
+            $this->mail->setFrom($this->smtp_account, 'Admin Blog');
+            $this->mail->addAddress($recevier);
 
             //Content
-            $mail->isHTML(true);                                  
-            $mail->Subject = $subject;
-            $mail->Body    = $content;
+            $this->mail->isHTML(true);                                  
+            $this->mail->Subject = $subject;
+            $this->mail->Body    = $content;
             
-            $mail->send();
+            $this->mail->send();
             return 'Message has been sent';
         } catch (Exception $e) {
-            return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
     public function testConfig(): string {
