@@ -5,16 +5,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
-class RegisterService{
+class RegisterService
+{
     private EntityManagerInterface $em;
     private UserRepository $userRepository;
 
-    public function __construct(EntityManagerInterface $em, UserRepository $userRepository){
+    public function __construct(EntityManagerInterface $em, UserRepository $userRepository)
+    {
         $this->em = $em;
         $this->userRepository = $userRepository;
     }
 
-    public function getAllUsers(): array|null {
+    public function getAllUsers(): array|null 
+    {
         $users = $this->userRepository->findAll();
         if(!$users){
             $users = null;
@@ -22,21 +25,26 @@ class RegisterService{
         return $users;
     }
 
-    public function getUserById(int $id) : User|null {
+    public function getUserById(int $id) : User|null 
+    {
         $user = $this->userRepository->find($id);
         if(!$user){
             $user = null;
         }
         return $user;
     }
-    public function getUserByEmail(string $email) : User| null {
+
+    public function getUserByEmail(string $email) : User| null 
+    {
         $user = $this->userRepository->findOneBy(["email"=>$email]);
         if(!$user){
             $user = null;
         }
         return $user;
     }
-    public function insertUser(?User $user) : bool {
+
+    public function insertUser(?User $user) : bool 
+    {
         if(!$user){
             return false;
         }
