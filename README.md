@@ -7,7 +7,7 @@ git clone https://github.com/mithridatem/courssymfony2024
 ```bash
 cd nom_projet
 ```
-**3 créer un fichier .env**,
+**3 créer un fichier .env** :
 ```env
 ###> symfony/framework-bundle ###
 APP_ENV=dev
