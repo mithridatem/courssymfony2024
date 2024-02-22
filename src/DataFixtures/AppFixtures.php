@@ -37,7 +37,8 @@ class AppFixtures extends Fixture
                 ->setLastname($faker->lastName())
                 ->setEmail($faker->email())
                 ->setPassword($this->passwordHasher->hashPassword($user,$password))
-                ->setRoles(['ROLE_USER']);
+                ->setRoles(['ROLE_USER'])
+                ->setActivated(false);
             //persister l'objet utilisateur
             $manager->persist($user);
             //ajouter l'objet utilisateur dans le tableau

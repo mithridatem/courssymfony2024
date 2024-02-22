@@ -73,7 +73,7 @@ class RegisterController extends AbstractController
                                         ->setEmail($email)
                                         ->setPassword($this->hash->hashPassword($user, $password))
                                         ->setRoles(['ROLE_USER'])
-                                        ->setIsActivated(false);
+                                        ->setActivated(false);
                                     //enregistrement du compte
                                     if ($this->registerService->insertUser($user)) {
                                         //envoi du mail
@@ -82,6 +82,8 @@ class RegisterController extends AbstractController
                                             'url' => "https://localhost:8000/register/activate/" . $user->getId(),
                                         ]);
                                         $this->emailService->sendEmail($email, $subject, $body->getContent());
+                                        $msg = "Le compte à bien été ajouté";
+                                        $notice = "success";
                                     }
                                     //le compte n'a pas été enregistré
                                     else {
@@ -154,12 +156,13 @@ class RegisterController extends AbstractController
     #[Route('/register/activate/{id}', name: 'app_register_activate')]
     public function activateUser(mixed $id): Response
     {
+        $id = UtilsService::cleanInput($id); 
         //test si id est un entier
         if (is_numeric($id)) {
             $user = $this->registerService->getUserById($id);
             //test si le compte existe
             if ($user) {
-                $user->setIsActivated(true);
+                $user->setActivated(true);
                 $this->registerService->updateUser($user);
                 //rediriger vers la connexion
                 return $this->redirectToRoute('app_login');

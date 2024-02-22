@@ -23,6 +23,7 @@ class AppAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
+
     }
 
     public function authenticate(Request $request): Passport
@@ -41,13 +42,13 @@ class AppAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+        //test si le compte est activé
+        if($token->getUser()->isActivated()) {
+            //redirection vers la page login
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
-
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        //redirection vers la page logout
+        return new RedirectResponse($this->urlGenerator->generate('app_logout'));
     }
 
     protected function getLoginUrl(Request $request): string

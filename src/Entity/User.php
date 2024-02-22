@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $img = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isActivated = null;
+    private ?bool $activated = null;
 
     public function getId(): ?int
     {
@@ -180,15 +180,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->firstname.' '.$this->lastname;
     }
 
-    public function isIsActivated(): ?bool
+    public function isActivated(): ?bool
     {
-        return $this->isActivated;
+        return $this->activated;
     }
 
-    public function setIsActivated(?bool $isActivated): static
+    public function setActivated(?bool $activated): static
     {
-        $this->isActivated = $isActivated;
+        $this->activated = $activated;
 
         return $this;
     }
+
 }
