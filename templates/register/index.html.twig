@@ -3,7 +3,7 @@
 {% block title %}Inscription {% endblock %}
 
 {% block body %}
-    {{ form_start(form, {'attr':{'class': 'max-w-sm mx-auto'} } ) }}
+    {{ form_start(form, {'attr':{'class': 'max-w-sm mx-auto mt-20'} } ) }}
     <div class="mb-5">
         {{ form_label(form.firstname) }}
         {{ form_widget(form.firstname) }}
@@ -29,5 +29,5 @@
     {{ form_errors(form.password.first, {'attr':{'class': 'test'} }) }}
     {{ form_end(form) }}
     
-    {% include "_toast.html.twig" %}
+    {% include "components/_toast.html.twig" %}
 {% endblock %}

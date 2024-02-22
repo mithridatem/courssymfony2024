@@ -71,7 +71,7 @@ class EmailService
     private function setConfig(): void
     {
         //Server settings
-        $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
         $this->mail->isSMTP();
         $this->mail->Host       = $this->smtp_server;
         $this->mail->SMTPAuth   = true;

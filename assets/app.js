@@ -8,4 +8,5 @@
 import './styles/app.css';
 import './styles/app.tailwind.css';
 import './styles/main.css';
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+import './preline.js';
+//console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
